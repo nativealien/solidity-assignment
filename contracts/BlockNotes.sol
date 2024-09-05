@@ -24,7 +24,7 @@ contract BlockNotes {
     }
 
     function getNote(uint256 _id) public view returns (string memory) {
-        require(_id > 0 && _id <= noteCount, "Note does not exist.");
+        require(_id > 0 && _id <= noteCount, "Note does not exist");
         return notes[_id].content;
     }
 }
