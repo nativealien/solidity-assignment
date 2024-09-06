@@ -14,5 +14,8 @@
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "hardhat": "^2.22.10",
     "solidity-coverage": "^0.8.13"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
   }
 }

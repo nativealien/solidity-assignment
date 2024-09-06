@@ -45,7 +45,9 @@ contract BlockNotes {
         if(!notes[_noteId].exists){
             revert NoteDoesNotExist(_noteId);
         }
-        assert(_noteId <= _noteCount); // Assertion check
+        else{
+            assert(_noteId <= _noteCount); // Assertion check
+        }
         _;
     }
 
@@ -73,22 +75,22 @@ contract BlockNotes {
         noteExist(_noteId, noteCount)
         onlyAuthorized(_noteId)
         view 
-        returns (string memory) 
+        returns (string memory, Visibility) 
     {
-        return notes[_noteId].content;
+        return (notes[_noteId].content, notes[_noteId].visibility);
     }
 
     function shareWith(uint256 _noteId, address _user) public 
-        onlyOwner(_noteId) 
         noteExist(_noteId, noteCount) 
+        onlyOwner(_noteId) 
     {
         notes[_noteId].sharedWith[_user] = true;
         emit NoteShared(_noteId, _user);
     }
 
     function deleteNote(uint256 _noteId) public 
-        onlyOwner(_noteId) 
         noteExist(_noteId, noteCount) 
+        onlyOwner(_noteId) 
     {
         notes[_noteId].exists = false;
         delete notes[_noteId];
@@ -96,8 +98,8 @@ contract BlockNotes {
     }
 
     function changeVisibility(uint256 _noteId, Visibility _newVisibility) public 
-        onlyOwner(_noteId) 
         noteExist(_noteId, noteCount) 
+        onlyOwner(_noteId) 
     {
         notes[_noteId].visibility = _newVisibility;
         emit NoteVisibilityChanged(_noteId, _newVisibility);
